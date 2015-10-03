@@ -1,27 +1,30 @@
 {
   "build": {
-    // Copy ./app/index.html (right hand side) to ./build/index.html.
     "index.html": "index.html",
     "app.js": [
-      // Paths relative to "app" directory that should be
-      // concatenated and processed during build.
-      "javascripts/app.js"
+      "../node_modules/react/dist/react.js",
+      "../node_modules/react-router/umd/ReactRouter.js",
+      "../node_modules/react-bootstrap/dist/react-bootstrap.js",
+      "javascripts/lib/jquery-1.11.3.min.js",
+      "javascripts/lib/bootstrap.min.js",
+      "javascripts/main.jsx",
+      "javascripts/frontpage.jsx",
+      "javascripts/navbar.jsx",
+      "javascripts/donarapp.jsx",
+      "javascripts/patrocinarapp.jsx",
+      "javascripts/causas.jsx"
     ],
     "app.css": [
-      // Paths relative to "app" directory that should be
-      // concatenated and processed during build.
-      "stylesheets/app.css"
+      "stylesheets/app.css",
+      "stylesheets/bootstrap.min.css"
     ],
-    // Note: You can also include directories.
-    // This will copy a static images directory to the build directory.
-    "images/": "images/"
+    "images/": "images/",
+    "fonts/" : "fonts/"
   },
   "deploy": [
-    // Names of contracts that should be deployed to the network.
     "CausaFactory"
   ],
   "rpc": {
-    // Default RPC configuration.
     "host": "localhost",
     "port": 8545
   }

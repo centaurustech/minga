@@ -1,0 +1,32 @@
+{
+  "name": "chilenoayuda",
+  "namespace": "consensys",
+  "version": "0.0.1",
+  "description": "Chileno Ayuda a Chileno",
+  "dependencies": {
+    "react": "^0.13.3",
+    "react-router": "^0.13.3",
+    "react-bootstrap": "^0.25.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NakamotoCorp/chilenoayuda.git"
+  },
+  "homepage": "https://github.com/NakamotoCorp/chilenoayuda.git",
+  "bugs": {
+    "url": "https://github.com/NakamotoCorp/chilenoayuda/issues"
+  },
+  "author": "Nakamoto Corp",
+  "authors": [
+    {
+      "name": "Andres Junge",
+      "email": "ajunge@yaykuy.cl",
+      "url": "https://github.com/ajunge"
+    },
+    {
+      "name": "Javier Salcedo",
+      "email": "javier@bitnexo.com",
+      "url": "https://github.com/javiersalcedo"
+    }
+  ]
+}
