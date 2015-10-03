@@ -134,4 +134,49 @@ contract('Causa', function(accounts) {
   });
 
 
+  it("should put deadline in the future", function(done) {
+ 	var causaContract;
+  var start;
+  var now;
+    var causa = Causa.new("nombre Test",100000,1,"http://ipfs/")
+    .then (function(_causaContract){
+    	   causaContract=_causaContract;
+    	   if(!causaContract.address) {
+    	   	   console.log(causaContract);
+    	   	   assert.notOk(causaContract.transactionHash, 'new contract not deployed');
+    	   	   done();
+	       } else {
+            start = (new Date).getTime();
+    	   		return causaContract.getNow.call();
+    	   }
+		   
+      })
+	.then (function(_now){
+      //console.log("_now:");
+      //console.log(_now);
+      now = _now
+		  return causaContract.deadline.call();
+      })
+	.then (function(_deadline){
+		  //console.log("_deadline");
+      //console.log(_deadline);
+      var end = (new Date).getTime();
+      var ms=end - start;
+      //console.log("ms:"+ms);
+      assert.isAbove(_deadline, now, 'deadline is in the future');
+	   	return causaContract.plazo.call();
+  })
+  .then (function(_plazo){
+      //console.log("_plazo");
+      //console.log(_plazo);
+       assert.equal(1,_plazo,'plazo do not match');
+       done();
+  })
+  .catch(function(e) {
+      //console.log("catch!");
+      //console.log(e);
+      done(e);
+    });
+  });
+  
 });

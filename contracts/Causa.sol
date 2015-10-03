@@ -25,6 +25,7 @@ contract Causa {
 
 
 	uint public montoRecaudado;
+	uint public deadline;
 	
 	// Acctiones patrocinador;
 	/* constructor */
@@ -32,14 +33,15 @@ contract Causa {
 		nombre=_nombre;
 		montoObjetivo = _montoObjetivo;
 		plazo = _plazo;
+		deadline = now + _plazo * 1 minutes;
 		url = _url;
-		patrocinador = msg.sender;
+		patrocinador = tx.origin;
 		terminado = true;
 	}
 
 
 	function updateBeneficiario(uint _banco, uint _cuenta, uint _rut, bytes32 _titular){
-		if(msg.sender == patrocinador){
+		if(tx.origin == patrocinador){
 			beneficiado = CuentaBanco({banco: _banco, cuenta: _cuenta, rut: _rut, titular: _titular});
 			terminado = false;
 		}
@@ -84,7 +86,12 @@ contract Causa {
 	}
 
 	//Final del crowdfunding
-	modifier seCumplioElPlazo() { if (now >= plazo) _ }
+	function getNow() returns (uint){
+		return now;
+	}
+	
+
+	modifier seCumplioElPlazo() { if (now >= deadline) _ }
 
 	function revisa() seCumplioElPlazo {
 		terminado = true;
