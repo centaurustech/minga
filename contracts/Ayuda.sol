@@ -16,6 +16,8 @@ contract Ayuda {
 	uint public montoRecaudado;
 	Donacion[] public donaciones;
 
+	bool terminado;
+
 	event Transferir(bool alFondo, uint banco);
 
 	/* constructor */
@@ -23,13 +25,16 @@ contract Ayuda {
 		beneficiario = Donacion({banco: _bancoBeneficiario, cuenta: _cuentaBeneficiario, rut: _rutBeneficiario, nombre: _nombreBeneficiario, monto: _montoObjetivo});
 		montoObjetivo = _montoObjetivo;
 		plazo = now + 10 days;
+		terminado = false;
 	}
 
 	function setIpfsHash(string _ipfsHash){
 		ipfsHash= _ipfsHash;
 	}
 
-	function donar(uint _bancoDonante, uint _cuentaDonante, uint _rutDonante, bytes32 _nombreDonante, uint _montoDonado ){
+	modifier activo { if (!terminado) _ }	
+
+	function donar(uint _bancoDonante, uint _cuentaDonante, uint _rutDonante, bytes32 _nombreDonante, uint _montoDonado ) activo{
 		montoRecaudado += _montoDonado;
 		donaciones[donaciones.length++] = Donacion({banco: _bancoDonante, cuenta: _cuentaDonante, rut: _rutDonante, nombre: _nombreDonante, monto: _montoDonado});
 		Transferir(true,_bancoDonante);
@@ -38,6 +43,7 @@ contract Ayuda {
 	modifier seCumplioElPlazo() { if (now >= plazo) _ }
 
 	function revisaMontoAlcanzado() seCumplioElPlazo {
+		terminado = true;
 		if(montoRecaudado >= montoObjetivo){
 			/* Se junto el monto */
 			beneficiario.monto = montoRecaudado;
