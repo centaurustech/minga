@@ -14,8 +14,14 @@
       "javascripts/patrocinarapp.jsx",
       "javascripts/causas.jsx",
       "javascripts/nuevacausa.jsx",
+      "javascripts/nuevacausasuccess.jsx",
       "javascripts/beneficiarioapp.jsx",
-      "javascripts/donarcausaapp.jsx"
+      "javascripts/donarcausaapp.jsx",
+      "javascripts/selectorproductos.jsx",
+      "javascripts/causaapp.jsx",
+      "javascripts/causapanel.jsx",
+      "javascripts/beneficiariopanel.jsx",
+      "javascripts/donacionespanel.jsx"
     ],
     "app.css": [
       "stylesheets/app.css",

@@ -3,7 +3,7 @@ geth --datadir /tmp/eth/364 \
 	 --genesis=./genesis.json \
 	 --unlock 0 \
 	 --password <(echo -n notsosecret) \
-	 --rpc --rpcport 8666 \
+	 --rpc --rpcport 8545 \
 	 --rpccorsdomain="*" \
 	 --mine \
 	 --minerthreads 4 \

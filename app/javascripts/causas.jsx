@@ -9,7 +9,7 @@ var Causas = React.createClass({
 
 	getCausasFromBlockchain: function(){
 		var causaFactory = CausaFactory.at(CausaFactory.deployed_address);
-		console.log("loading contexts from causaFactory:" + CausaFactory.deployed_address);
+		console.log("loading causas from causaFactory:" + CausaFactory.deployed_address);
 	    causaFactory.numCausas.call()
 	      .then (function(_numCausas){
 	        var num=Number(_numCausas);
@@ -131,7 +131,7 @@ var Causas = React.createClass({
 		        	<td  className="right">{ recaudado }</td>
 		        	<td  className="right">{ meta }</td>
 		        	<td  className="right">{ porcentaje }</td>
-		        	<td>
+		        	<td >
 		        		<ButtonToolbar>
 							{ boton }
 							<Button bsStyle='info' bsSize='xsmall' onClick={this.goToCausa.bind(this,causa.address)}>

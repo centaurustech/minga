@@ -17,7 +17,7 @@ var NavBar = React.createClass({displayName: 'NavBar',
               <span className="icon-bar"></span>
             </button>
             <a className="navbar-brand page-scroll" href="#">
-                    Chileno Ayuda a Chileno
+                    Banco de Chile :: Chileno Ayuda a Chileno
             </a>
           </div>
 

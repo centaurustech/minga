@@ -47,7 +47,7 @@ contract('Causa', function(accounts) {
     	   	   assert.notOk(causaContract.transactionHash, 'new contract not deployed');
     	   	   done();
 	       } else {
-    	   		return causaContract.updateBeneficiario(666,123456789,11,"John Doe");
+    	   		return causaContract.updateBeneficiario("Banco de Chile",123456789,'CC',11,"John Doe",'john@doe.com');
     	   }
 		   
       })
@@ -57,10 +57,12 @@ contract('Causa', function(accounts) {
 	.then (function(_beneficiado){
 		  //console.log("_beneficiado");
           //console.log(_beneficiado);
-          assert.equal(666,Number(_beneficiado[0]),"banco do not match");
+          assert.equal("Banco de Chile",web3.toAscii(_beneficiado[0]).replace(/^\0+/, '').replace(/\0+$/, ''),"banco do not match");
           assert.equal(123456789,Number(_beneficiado[1]),"cuenta do not match");
-          assert.equal(11,Number(_beneficiado[2]),"rut do not match");
-          assert.equal("John Doe",web3.toAscii(_beneficiado[3]).replace(/^\0+/, '').replace(/\0+$/, ''),"titular do not match");
+          assert.equal("CC",web3.toAscii(_beneficiado[2]).replace(/^\0+/, '').replace(/\0+$/, ''),"tipo do not match");
+          assert.equal(11,Number(_beneficiado[3]),"rut do not match");
+          assert.equal("John Doe",web3.toAscii(_beneficiado[4]).replace(/^\0+/, '').replace(/\0+$/, ''),"titular do not match");
+	   	  assert.equal("john@doe.com",web3.toAscii(_beneficiado[5]).replace(/^\0+/, '').replace(/\0+$/, ''),"email do not match");
 	   	  done();
       })
     .catch(function(e) {
@@ -80,12 +82,12 @@ contract('Causa', function(accounts) {
     	   	   assert.notOk(causaContract.transactionHash, 'new contract not deployed');
     	   	   done();
 	       } else {
-    	   		return causaContract.updateBeneficiario(666,123456789,11,"John Doe");
+    	   		return causaContract.updateBeneficiario("Banco de Chile",123456789,'CC',11,"John Doe",'john@doe.com');
     	   }
 		   
       })
 	.then (function(_tx){
-		  return causaContract.donar(30000,667,123456788,12,"John Doe2");
+		  return causaContract.donar(30000,"Banco del Estado",123456788,'CV',12,"John Doe2",'john2@doe.com');
       })
 	.then (function(_tx){
 		  //console.log(causaContract);
@@ -105,13 +107,19 @@ contract('Causa', function(accounts) {
 	.then (function(_banco){
 		  //console.log("_banco");
           //console.log(_banco);
-          assert.equal(667,Number(_banco),"banco do not match");
+          assert.equal("Banco del Estado",web3.toAscii(_banco).replace(/^\0+/, '').replace(/\0+$/, ''),"banco do not match");
        	  return causaContract.getDonacionCuenta.call(1);
       })
-    .then (function(_cuenta){
+	.then (function(_cuenta){
 		  //console.log("_cuenta");
           //console.log(_cuenta);
           assert.equal(123456788,Number(_cuenta),"cuenta do not match");
+       	  return causaContract.getDonacionTipo.call(1);
+      })
+    .then (function(_tipo){
+		  //console.log("_tipo");
+          //console.log(_tipo);
+          assert.equal("CV",web3.toAscii(_tipo).replace(/^\0+/, '').replace(/\0+$/, ''),"banco do not match");
        	  return causaContract.getDonacionRut.call(1);
       })
     .then (function(_rut){
@@ -124,6 +132,12 @@ contract('Causa', function(accounts) {
 		  //console.log("_titular");
           //console.log(_titular);
           assert.equal("John Doe2",web3.toAscii(_titular).replace(/^\0+/, '').replace(/\0+$/, ''),"titular do not match");
+	   	  return causaContract.getDonacionEmail.call(1);
+      })
+    .then (function(_email){
+		  //console.log("_email");
+          //console.log(_email);
+          assert.equal("john2@doe.com",web3.toAscii(_email).replace(/^\0+/, '').replace(/\0+$/, ''),"titular do not match");
 	   	  done();
       })
     .catch(function(e) {

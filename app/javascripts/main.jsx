@@ -14,6 +14,8 @@ window.Button = ReactBootstrap.Button;
 window.Label = ReactBootstrap.Label;
 window.Input = ReactBootstrap.Input;
 window.Table = ReactBootstrap.Table;
+window.Modal = ReactBootstrap.Modal;
+window.Alert = ReactBootstrap.Alert;
 
 //FOrmat money
 Number.prototype.formatMoney = function(c, d, t){
@@ -63,6 +65,7 @@ window.onload = function() {
         <Route name="donarCausa" path="/donar/:causaAddress" handler={DonarCausaApp} />
         <Route name="patrocinar" path="/patrocinar" handler={PatrocinarApp} />
         <Route name="beneficiario" path="/beneficiario/:causaAddress" handler={BeneficiarioApp} />
+        <Route name="causa" path="/causa/:causaAddress" handler={CausaApp} />
 
       </Route>
     );

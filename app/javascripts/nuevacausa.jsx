@@ -9,8 +9,16 @@ var NuevaCausaPanel = React.createClass({
 	  	var causaFactory = CausaFactory.at(CausaFactory.deployed_address);
 	    causaFactory.create(newCausaNombre,newCausaMonto,newCausaPlazo,newCausaURL)
 	    .then (function(tx){
-			console.log("Context Created");
-			this.close();
+			console.log("Causa Creada");
+			//Buscando los datos de la causa (es la ultima, si...claro)
+			return causaFactory.numCausas.call();
+		})
+		.then (function(_numCausas){
+			return causaFactory.getCausa.call(_numCausas -1);
+		})
+	    .then ( function (_causaAddress){
+        	this.setState({nuevaCausaAddress: _causaAddress}); 
+			this.refs.nuevaCausaSuccess.open();
 		}.bind(this))
 		.catch(function(e) {
 			console.log("catch!");
@@ -24,7 +32,11 @@ var NuevaCausaPanel = React.createClass({
   	},
 
     close: function() {
-        this.context.router.transitionTo('/donar');
+        this.context.router.transitionTo('/causa/'+this.state.nuevaCausaAddress);
+    },
+
+    getInitialState: function(){
+    	return {nuevaCausaAddress: '' };
     },
 
   	render: function() {
@@ -43,6 +55,9 @@ var NuevaCausaPanel = React.createClass({
           	<Label>URL</Label>
         		<Input type="text" placeholder="http://...." ref='newCausaURL' />
 	        </form>
+	        <NuevaCausaSuccess ref={'nuevaCausaSuccess'} 
+	        	causaAddress={this.state.nuevaCausaAddress}
+	        	closeParent={this.close}/>
 		</Panel>
 		
     );

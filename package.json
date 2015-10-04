@@ -6,7 +6,8 @@
   "dependencies": {
     "react": "^0.13.3",
     "react-router": "^0.13.3",
-    "react-bootstrap": "^0.25.2"
+    "react-bootstrap": "^0.25.2",
+    "node-rest-client": "^1.5.1"
   },
   "repository": {
     "type": "git",
