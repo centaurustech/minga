@@ -79,7 +79,7 @@ var Causas = React.createClass({
 		
 		var rows = this.state.causas.map(function (causa) {
 			var p = (causa.montoRecaudado / causa.montoObjetivo ) * 100; 
-			var porcentaje = p.toString() + "% de $"+causa.montoObjetivo;
+			var porcentaje = p.toString() + "% de $"+ (causa.montoObjetivo.formatMoney(0));
 			return (
 	      		<tr key={causa.index}>
 		        	<td>{causa.index}</td>
