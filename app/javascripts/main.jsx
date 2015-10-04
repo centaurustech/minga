@@ -11,17 +11,19 @@ window.Glyphicon = ReactBootstrap.Glyphicon;
 window.Panel = ReactBootstrap.Panel;
 window.ButtonToolbar = ReactBootstrap.ButtonToolbar;
 window.Button = ReactBootstrap.Button;
+window.Label = ReactBootstrap.Label;
+window.Input = ReactBootstrap.Input;
+window.Table = ReactBootstrap.Table;
 
 
 var Main = React.createClass({
   render: function() {
     return (
-      <div className="dapp-store">
+      <div>
         <NavBar />
-        <div className="container">
-
-        </div>
+        <div className="container-fluid"> 
         <RouteHandler/>
+        </div>
       </div>
     );
   }

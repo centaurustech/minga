@@ -12,7 +12,8 @@
       "javascripts/navbar.jsx",
       "javascripts/donarapp.jsx",
       "javascripts/patrocinarapp.jsx",
-      "javascripts/causas.jsx"
+      "javascripts/causas.jsx",
+      "javascripts/nuevacausa.jsx"
     ],
     "app.css": [
       "stylesheets/app.css",

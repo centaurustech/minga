@@ -1,7 +1,11 @@
 var PatrocinarApp = React.createClass({
   render: function() {
     return (
-     <Causas />
+		<ReactBootstrap.Row>
+			<ReactBootstrap.Col md={6}>
+			<NuevaCausaPanel />
+			</ReactBootstrap.Col>
+		</ReactBootstrap.Row>
     );
   }
 });
