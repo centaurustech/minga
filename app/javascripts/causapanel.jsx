@@ -1,4 +1,7 @@
 var CausaPanel = React.createClass({
+	goToUrl: function(url){
+		window.open(url); 
+	},
 	render: function() {
 		var header = (
 			<span>Datos de la causa</span>
@@ -36,7 +39,13 @@ var CausaPanel = React.createClass({
 			    	</tr>
 			    	<tr>
 			        	<td>URL</td>
-			        	<td>{causa.url}</td>
+			        	<td>{causa.url}
+			        		<span className="pull-right">
+			            		<Button bsStyle='info' bsSize='xsmall' onClick={this.goToUrl.bind(this,causa.url)}>
+										Ver 
+								</Button>
+			          		</span>
+			        	</td>
 			    	</tr>
 				</tbody>
 			</Table>
