@@ -110,8 +110,9 @@ contract Causa {
 			Transferir(false,0);
 		}else{
 			if ( now >= deadline ){
-				for (uint i = 0; i < donaciones.length; ++i) {
-					Transferir(false,i+1);
+				terminado = true;
+				for (uint id = 1; id <= donaciones.length; ++id) {
+					Transferir(false,id);
             	}   
 			}
 		}

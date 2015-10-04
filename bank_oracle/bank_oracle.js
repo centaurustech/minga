@@ -12,7 +12,7 @@ causaFactory.numCausas.call()
       .then ( function (_causaAddress){
           var causaAddress = _causaAddress;
           watchCausa(causaAddress);
-          //monitorCausa(causaAddress);
+          monitorCausa(causaAddress);
       }.bind(this))
       .catch(function(e) {
           console.log(e);
@@ -34,6 +34,7 @@ nuevaCausaEvent.watch(function(error, result){
     var causaAddress=result.args.causaAddress;
     console.log("nuevaCausa en:"+causaAddress);
     watchCausa(causaAddress);
+    monitorCausa(causaAddress);
   }else{
     console.log("Error en nuevaCausaEvent");
     console.log(error);
@@ -60,14 +61,29 @@ function watchCausa(_causaAddress){
 
 function monitorCausa(_causaAddress){
   console.log("monitoring causa in "+_causaAddress);
-  var t = setInterval( function() { revisa(_causaAddress); }, 1000 );
+  console.log("revisando "+_causaAddress); 
+  revisa(_causaAddress);
+  
+  var t = setInterval( function() { 
+      console.log("revisando "+_causaAddress); 
+      revisa(_causaAddress);
+  }, 1000 *60 );
 }
 
 function revisa(_causaAddress){  
   var causa = Causa.at(_causaAddress);
-  causa.revisa()
+  causa.terminado.call()
+  .then(function(_terminado){
+    //console.log("terminado:"+_terminado)
+    if(!_terminado){
+      console.log("revisando: "+_causaAddress);
+      return causa.revisa();
+    }
+  })
   .then (function(_tx){
-    console.log(".");
+    if(_tx){
+      console.log("revisado");
+    }
   })
   .catch(function(e) {
     console.log(e);
@@ -153,37 +169,37 @@ function transferOut(c,_id){
     "mensaje": "Entrega de Donacion"
   };
 
-  c.getDonacionMonto.call(0)
+  c.getDonacionMonto.call(_id)
   .then (function(_monto){
     var monto=Number(_monto);
     t.monto=monto;
-    return c.getDonacionRut.call(0);
+    return c.getDonacionRut.call(_id);
   })
   .then (function(_rut){
     var rut=Number(_rut);
     t.datosDestinatario.rut=rut;
-    return c.getDonacionTitular.call(0);
+    return c.getDonacionTitular.call(_id);
   })
   .then (function(_titular){
     var titular=web3.toAscii(_titular).replace(/^\0+/, '').replace(/\0+$/, '');
     t.datosDestinatario.nombre=titular;
     t.datosDestinatario.alias=titular;
-    return c.getDonacionEmail.call(0);
+    return c.getDonacionEmail.call(_id);
   })
   .then (function(_email){
     var email=web3.toAscii(_email).replace(/^\0+/, '').replace(/\0+$/, '');
     t.datosDestinatario.mail=email;
-    return c.getDonacionCuenta.call(0)
+    return c.getDonacionCuenta.call(_id)
   })
   .then (function(_cuenta){
     var cuenta=Number(_cuenta);
     t.datosDestinatario.producto.id=cuenta;
-    return c.getDonacionTipo.call(0)
+    return c.getDonacionTipo.call(_id)
   })
   .then (function(_tipo){
     var tipo=web3.toAscii(_tipo).replace(/^\0+/, '').replace(/\0+$/, '');
     t.datosDestinatario.producto.tipo=tipo; 
-    return c.getDonacionBanco.call(0)
+    return c.getDonacionBanco.call(_id)
   })
   .then (function(_banco){
     var banco=web3.toAscii(_banco).replace(/^\0+/, '').replace(/\0+$/, '');
@@ -192,7 +208,11 @@ function transferOut(c,_id){
   })
   .then (function(_nombre){
     var nombre=web3.toAscii(_nombre).replace(/^\0+/, '').replace(/\0+$/, '');
-    t.mensaje="Entrega de recaudacion de donacion '"+nombre+"'";
+    if(_id == 0){
+      t.mensaje="Entrega de recaudacion de donacion '"+nombre+"'";
+    }else{
+      t.mensaje="Devolucion de donacion '"+nombre+"'";
+    }
     console.log(t);
     doTransfer(t);
   })
