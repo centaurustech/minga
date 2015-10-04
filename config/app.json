@@ -21,7 +21,8 @@
       "javascripts/causaapp.jsx",
       "javascripts/causapanel.jsx",
       "javascripts/beneficiariopanel.jsx",
-      "javascripts/donacionespanel.jsx"
+      "javascripts/donacionespanel.jsx",
+      "javascripts/blockchaineando.jsx"
     ],
     "app.css": [
       "stylesheets/app.css",

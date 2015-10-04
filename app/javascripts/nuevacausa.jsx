@@ -7,6 +7,7 @@ var NuevaCausaPanel = React.createClass({
 	    var newCausaURL = this.refs.newCausaURL.getValue().trim();
 
 	  	var causaFactory = CausaFactory.at(CausaFactory.deployed_address);
+	  	this.refs.bl.open();
 	    causaFactory.create(newCausaNombre,newCausaMonto,newCausaPlazo,newCausaURL)
 	    .then (function(tx){
 			console.log("Causa Creada");
@@ -17,7 +18,8 @@ var NuevaCausaPanel = React.createClass({
 			return causaFactory.getCausa.call(_numCausas -1);
 		})
 	    .then ( function (_causaAddress){
-        	this.setState({nuevaCausaAddress: _causaAddress}); 
+        	this.setState({nuevaCausaAddress: _causaAddress});
+        	this.refs.bl.close(); 
 			this.refs.nuevaCausaSuccess.open();
 		}.bind(this))
 		.catch(function(e) {
@@ -55,6 +57,7 @@ var NuevaCausaPanel = React.createClass({
           	<Label>URL</Label>
         		<Input type="text" placeholder="http://...." ref='newCausaURL' />
 	        </form>
+	        <Blockchaineando ref={'bl'}/>
 	        <NuevaCausaSuccess ref={'nuevaCausaSuccess'} 
 	        	causaAddress={this.state.nuevaCausaAddress}
 	        	closeParent={this.close}/>

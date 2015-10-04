@@ -8,10 +8,12 @@ var BeneficiarioApp = React.createClass({
 	    var beneficiarioTitular = this.refs.beneficiarioTitular.getValue().trim();
 		var beneficiarioEmail = this.refs.beneficiarioEmail.getValue().trim();
 
+		this.refs.bl.open();
 	  	var causa = Causa.at(this.props.params.causaAddress);
 	    causa.updateBeneficiario(beneficiarioBanco,beneficiarioCuenta,beneficiarioTipo,beneficiarioRut,beneficiarioTitular,beneficiarioEmail)
 	    .then (function(tx){
 			console.log("Beneficiario Actualizado");
+			this.refs.bl.close();
 			this.close();
 		}.bind(this))
 		.catch(function(e) {
@@ -49,6 +51,7 @@ var BeneficiarioApp = React.createClass({
           	<Label>Email</Label>
         		<Input type="text" placeholder="Email" ref='beneficiarioEmail' />
 	        </form>
+	        <Blockchaineando ref={'bl'}/>
 		</Panel>
 		
     );

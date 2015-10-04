@@ -10,6 +10,7 @@ var DonarCausaApp = React.createClass({
 	    var donanteEmail = this.state.cliente.contacto.email;
 	    var monto = this.refs.monto.getValue().trim();
 
+      this.refs.bl.open();
 	  	var causa = Causa.at(this.props.params.causaAddress);
 	    causa.donar(monto,donanteBanco,donanteCuenta,donanteTipo,donanteRut,donanteTitular,donanteEmail)
 	    .then (function(tx){
@@ -18,6 +19,7 @@ var DonarCausaApp = React.createClass({
       }.bind(this))
       .then (function(tx){
         console.log("revisado");
+        this.refs.bl.close();
         this.close();
       }.bind(this))
 		  .catch(function(e) {
@@ -152,6 +154,7 @@ var DonarCausaApp = React.createClass({
         	<form>
           	
         	{ donar }
+          <Blockchaineando ref={'bl'}/>
           	</form>
 		</Panel>
 		
