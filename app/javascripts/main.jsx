@@ -60,7 +60,10 @@ window.onload = function() {
       <Route handler={Main} path="/">
         <DefaultRoute name="front-page" handler={FrontPage} />
         <Route name="donar" path="/donar" handler={DonarApp} />
+        <Route name="donarCausa" path="/donar/:causaAddress" handler={DonarCausaApp} />
         <Route name="patrocinar" path="/patrocinar" handler={PatrocinarApp} />
+        <Route name="beneficiario" path="/beneficiario/:causaAddress" handler={BeneficiarioApp} />
+
       </Route>
     );
 

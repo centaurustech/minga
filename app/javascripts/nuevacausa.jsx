@@ -22,7 +22,7 @@ var NuevaCausaPanel = React.createClass({
 	contextTypes: {
     	router: React.PropTypes.func
   	},
-  	
+
     close: function() {
         this.context.router.transitionTo('/donar');
     },
@@ -42,7 +42,7 @@ var NuevaCausaPanel = React.createClass({
         		<Input type="text" placeholder="Duracion" ref='newCausaPlazo' />
           	<Label>URL</Label>
         		<Input type="text" placeholder="http://...." ref='newCausaURL' />
-        </form>
+	        </form>
 		</Panel>
 		
     );

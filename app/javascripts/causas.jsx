@@ -58,6 +58,18 @@ var Causas = React.createClass({
         	//console.log(_montoRecaudado);
         	causa.montoRecaudado = Number(_montoRecaudado);
 
+        	return c.terminado.call();
+        })
+        .then ( function (_terminado){
+        	//console.log(_terminado);
+        	causa.terminado = _terminado;
+
+        	return c.hasBeneficiado.call();
+        })
+        .then ( function (_hasBeneficiado){
+			//console.log(_hasBeneficiado);
+        	causa.hasBeneficiado = _hasBeneficiado;
+
 	        var causas = this.state.causas;
     	    causas[_index] = causa;
         	this.setState({ causas: causas });
@@ -67,6 +79,20 @@ var Causas = React.createClass({
     	})
     	.done();
   	},
+
+  	contextTypes: {
+    	router: React.PropTypes.func
+  	},
+  	
+    goToCausa: function(_address) {
+        this.context.router.transitionTo('/causa/'+_address);
+    },
+    goToDonar: function(_address) {
+        this.context.router.transitionTo('/donar/'+_address);
+    },
+    goToConfigBeneficiario: function(_address) {
+        this.context.router.transitionTo('/beneficiario/'+_address);
+    },
 
   	render: function() {
     	var header = (
@@ -79,19 +105,38 @@ var Causas = React.createClass({
 		
 		var rows = this.state.causas.map(function (causa) {
 			var p = (causa.montoRecaudado / causa.montoObjetivo ) * 100; 
-			var porcentaje = p.toString() + "% de $"+ (causa.montoObjetivo.formatMoney(0));
+			var porcentaje = Math.round(p).toString() + "%";
+			var meta = "$"+ (causa.montoObjetivo.formatMoney(0, ',', ' '));
+			var recaudado = "$"+ (causa.montoRecaudado.formatMoney(0, ',', ' '));
+			var boton;
+			if(causa.hasBeneficiado){
+				if(!causa.terminado){
+					boton = (
+						<Button bsStyle='success' bsSize='xsmall' onClick={this.goToDonar.bind(this,causa.address)}>
+							Donar 
+						</Button>
+					);
+				}
+			}else{
+				boton = (
+						<Button bsStyle='warning' bsSize='xsmall' onClick={this.goToConfigBeneficiario.bind(this,causa.address)}>
+							Datos de Beneficiario 
+						</Button>
+				);
+			}
 			return (
 	      		<tr key={causa.index}>
 		        	<td>{causa.index}</td>
 		        	<td>{causa.nombre}</td>
-		        	<td>{ porcentaje }</td>
+		        	<td  className="right">{ recaudado }</td>
+		        	<td  className="right">{ meta }</td>
+		        	<td  className="right">{ porcentaje }</td>
 		        	<td>
 		        		<ButtonToolbar>
-		        			<Link to={"/causa/" + causa.address}>
-				        		<Button bsStyle='success' bsSize='xsmall'>
-			  	  					<Glyphicon glyph='arrow-right' /> Ir 
-		  	  					</Button>
-	  	  					</Link>
+							{ boton }
+							<Button bsStyle='info' bsSize='xsmall' onClick={this.goToCausa.bind(this,causa.address)}>
+								Ver 
+							</Button>
   	  					</ButtonToolbar>
   					</td>
 		    	</tr>
@@ -106,7 +151,9 @@ var Causas = React.createClass({
 					<tr>
 					<th>#</th>
 					<th>Nombre</th>
-					<th>%</th>
+					<th>Recaudado</th>
+					<th>Meta</th>
+					<th  className="right">%</th>
 					<th></th>
 					</tr>
 				</thead>

@@ -68,6 +68,11 @@ contract Causa {
 		if(id==0) return montoRecaudado;
 		return donaciones[id-1].monto;
 	}
+
+	function hasBeneficiado() returns (bool){
+		return (beneficiado.rut != 0);Banc
+	}
+
 	function getDonacionBanco(uint id) returns (uint){
 		if(id==0) return beneficiado.banco;
 		return donaciones[id-1].donante.banco;
